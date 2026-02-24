@@ -747,7 +747,87 @@
                 padding: 4rem 5%;
             }
         }
+/* Sonido Binaural */
+.binaural {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a1a2e 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
 
+.binaural-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.binaural-info {
+    padding: 2rem;
+}
+
+.binaural-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--bg-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+}
+
+.binaural-info h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.binaural-info p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.binaural-features {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.binaural-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.binaural-feature svg {
+    color: var(--accent);
+}
+
+.spotify-embed {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border);
+}
+
+.spotify-embed iframe {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .binaural-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .binaural-info {
+        padding: 0;
+    }
+}
         /* Animaciones de entrada */
         .fade-in {
             opacity: 0;
@@ -769,6 +849,7 @@
         <div class="nav-links">
             <a href="#servicios" data-es="Servicios" data-en="Services">Servicios</a>
             <a href="#sonido-directo" data-es="Sonido Directo" data-en="Location Sound">Sonido Directo</a>
+            <a href="#binaural" data-es="Binaural" data-en="Binaural">Binaural</a>
             <a href="#portfolio" data-es="Portfolio" data-en="Portfolio">Portfolio</a>
             <a href="#equipo" data-es="Equipo" data-en="Equipment">Equipo</a>
             <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
@@ -986,7 +1067,41 @@
             </div>
         </div>
     </section>
+<!-- Sonido Binaural -->
+<section class="binaural" id="binaural">
+    <div class="section-header fade-in">
+        <h2 data-es="Experiencia Binaural" data-en="Binaural Experience">Experiencia Binaural</h2>
+        <p data-es="Sonido 3D inmersivo que trasciende la estéreo tradicional. Escucha con auriculares."
+           data-en="Immersive 3D sound that transcends traditional stereo. Listen with headphones.">
+            Sonido 3D inmersivo que trasciende la estéreo tradicional. Escucha con auriculares.
+        </p>
+    </div>
 
+    <div class="binaural-content fade-in">
+        <div class="binaural-info">
+            <div class="binaural-badge">3D AUDIO</div>
+            <h3 data-es="Proyecto para Artista Internacional" data-en="Project for International Artist">Proyecto para Artista Internacional</h3>
+            <p data-es="Producción binaural realizada hace 3 años para un destacado artista. Esta pieza demuestra nuestra capacidad de crear experiencias sonoras inmersivas que envuelven al oyente en un campo sonoro tridimensional, utilizando técnicas avanzadas de grabación y post-producción espacial."
+               data-en="Binaural production made 3 years ago for a renowned artist. This piece demonstrates our ability to create immersive sound experiences that envelop the listener in a three-dimensional sound field, using advanced recording and spatial post-production techniques.">
+                Producción binaural realizada hace 3 años para un destacado artista. Esta pieza demuestra nuestra capacidad de crear experiencias sonoras inmersivas que envuelven al oyente en un campo sonoro tridimensional, utilizando técnicas avanzadas de grabación y post-producción espacial.
+            </p>
+            <div class="binaural-features">
+                <div class="binaural-feature">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                    <span data-es="Usa auriculares" data-en="Use headphones">Usa auriculares</span>
+                </div>
+                <div class="binaural-feature">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                    <span data-es="Reproducir en Spotify" data-en="Play on Spotify">Reproducir en Spotify</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="spotify-embed">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/34dZWauDVRzWt6QBVYbWWv?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
     <!-- Portfolio con Behance incrustado -->
     <section id="portfolio">
         <div class="section-header fade-in">
@@ -1296,4 +1411,5 @@
     </script>
 </body>
 </html>
+
 
