@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Austral Sonus | Post-Producción de Sonido, Foley & Sonido Directo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #c9a962;
+            --accent-hover: #d4b978;
+            --border: #2a2a2a;
+            --waveform: #c9a962;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        /* Navegación */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-switch {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-switch:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .waveform-container {
+            position: absolute;
+            bottom: 20%;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            height: 100%;
+            width: 100%;
+            padding: 0 10%;
+        }
+
+        .bar {
+            width: 4px;
+            background: linear-gradient(to top, var(--accent), transparent);
+            border-radius: 2px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { height: 20%; }
+            50% { height: 100%; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 169, 98, 0.3);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-secondary);
+        }
+
+        /* Secciones generales */
+        section {
+            padding: 8rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        /* Servicios */
+        .services {
+            background: var(--bg-secondary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .service-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(201, 169, 98, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .featured {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, rgba(201, 169, 98, 0.05) 100%);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Sonido Directo - Nueva Sección */
+        .location-sound {
+            background: var(--bg-primary);
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .location-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .location-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            background: var(--bg-tertiary);
+        }
+
+        .location-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(201, 169, 98, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--accent);
+        }
+
+        .location-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .location-intro {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .location-intro-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .location-intro-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .location-equipment-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .location-equipment-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .location-equipment-item svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        /* Portfolio - Behance Embed */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .behance-embed {
+            width: 100%;
+            height: 300px;
+            border: none;
+            background: var(--bg-tertiary);
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .portfolio-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .view-on-behance {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: gap 0.3s ease;
+        }
+
+        .view-on-behance:hover {
+            gap: 0.8rem;
+        }
+
+        .view-on-behance svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Equipo */
+        .equipment {
+            background: var(--bg-secondary);
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .equipment-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .equipment-item:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .equipment-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .equipment-item div h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .equipment-item div p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Contacto */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+
+        .contact-method.whatsapp {
+            background: linear-gradient(135deg, #25d36615 0%, var(--bg-secondary) 100%);
+            border-color: #25d36650;
+        }
+
+        .contact-method.whatsapp:hover {
+            border-color: #25d366;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.2);
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--accent);
+        }
+
+        .contact-method.whatsapp .contact-icon {
+            color: #25d366;
+        }
+
+        .contact-form {
+            background: var(--bg-secondary);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .location-intro {
+                grid-template-columns: 1fr;
+            }
+
+            .location-equipment-list {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4rem 5%;
+            }
+        }
+
+        /* Animaciones de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegación -->
+    <nav>
+        <a href="#" class="logo">AUSTRAL <span>SONUS</span></a>
+        <div class="nav-links">
+            <a href="#servicios" data-es="Servicios" data-en="Services">Servicios</a>
+            <a href="#sonido-directo" data-es="Sonido Directo" data-en="Location Sound">Sonido Directo</a>
+            <a href="#portfolio" data-es="Portfolio" data-en="Portfolio">Portfolio</a>
+            <a href="#equipo" data-es="Equipo" data-en="Equipment">Equipo</a>
+            <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
+            <button class="lang-switch" onclick="toggleLanguage()">ES / EN</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="waveform-container">
+            <div class="waveform" id="waveform">
+                <!-- Barras generadas por JS -->
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 data-es="Damos vida al <span class='highlight'>silencio</span>" data-en="We bring <span class='highlight'>silence</span> to life">
+                Damos vida al <span class="highlight">silencio</span>
+            </h1>
+            <p data-es="Estudio de post-producción y sonido directo en Argentina. Especialistas en Foley, edición de diálogo, masterización y grabación de sonido en locación para cine, publicidad y streaming."
+               data-en="Post-production and location sound studio in Argentina. Specialists in Foley, dialogue editing, mastering and on-set sound recording for film, advertising and streaming.">
+                Estudio de post-producción y sonido directo en Argentina. Especialistas en Foley, edición de diálogo, masterización y grabación de sonido en locación para cine, publicidad y streaming.
+            </p>
+            <div class="cta-buttons">
+                <a href="#servicios" class="btn btn-primary" data-es="Ver Servicios" data-en="View Services">Ver Servicios</a>
+                <a href="#contacto" class="btn btn-secondary" data-es="Contactar" data-en="Get in Touch">Contactar</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Servicios de Post-Producción -->
+    <section class="services" id="servicios">
+        <div class="section-header fade-in">
+            <h2 data-es="Post-Producción de Sonido" data-en="Sound Post-Production">Post-Producción de Sonido</h2>
+            <p data-es="Soluciones completas de post-producción para proyectos audiovisuales de alto impacto."
+               data-en="Complete post-production solutions for high-impact audiovisual projects.">
+                Soluciones completas de post-producción para proyectos audiovisuales de alto impacto.
+            </p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card featured fade-in">
+                <span class="featured-badge" data-es="Especialidad" data-en="Specialty">Especialidad</span>
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v4"/></svg>
+                </div>
+                <h3 data-es="Grabación y Edición de Foley" data-en="Foley Recording & Editing">Grabación y Edición de Foley</h3>
+                <p data-es="Creación artesanal de efectos de sonido sincronizados. Desde pasos hasta interacciones complejas con objetos, damos credibilidad táctil a tus imágenes."
+                   data-en="Handcrafted synchronized sound effects creation. From footsteps to complex object interactions, we give tactile credibility to your images.">
+                    Creación artesanal de efectos de sonido sincronizados. Desde pasos hasta interacciones complejas con objetos, damos credibilidad táctil a tus imágenes.
+                </p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                </div>
+                <h3 data-es="Edición de Diálogo" data-en="Dialogue Editing">Edición de Diálogo</h3>
+                <p data-es="Limpieza precisa, edición de ritmo y conformado de producción. Claridad vocal perfecta para cine, series y publicidad."
+                   data-en="Precise cleaning, rhythm editing and production conforming. Perfect vocal clarity for film, series and advertising.">
+                    Limpieza precisa, edición de ritmo y conformado de producción. Claridad vocal perfecta para cine, series y publicidad.
+                </p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                </div>
+                <h3 data-es="Diseño Sonoro" data-en="Sound Design">Diseño Sonoro</h3>
+                <p data-es="Creación de ambientes sonoros, texturas atmosféricas y efectos especiales que elevan la narrativa visual."
+                   data-en="Creation of sound environments, atmospheric textures and special effects that elevate the visual narrative.">
+                    Creación de ambientes sonoros, texturas atmosféricas y efectos especiales que elevan la narrativa visual.
+                </p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/><circle cx="17" cy="7" r="5"/></svg>
+                </div>
+                <h3 data-es="Masterización" data-en="Mastering">Masterización</h3>
+                <p data-es="Masterización broadcast-ready para Netflix, Amazon Prime, cine y plataformas streaming. Cumplimos estándares internacionales de loudness."
+                   data-en="Broadcast-ready mastering for Netflix, Amazon Prime, cinema and streaming platforms. We meet international loudness standards.">
+                    Masterización broadcast-ready para Netflix, Amazon Prime, cine y plataformas streaming. Cumplimos estándares internacionales de loudness.
+                </p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                </div>
+                <h3 data-es="Mezcla 5.1 / Estéreo" data-en="5.1 / Stereo Mixing">Mezcla 5.1 / Estéreo</h3>
+                <p data-es="Mezcla cinematográfica que balancea diálogo, música y efectos con precisión quirúrgica para una experiencia inmersiva."
+                   data-en="Cinematic mixing that balances dialogue, music and effects with surgical precision for an immersive experience.">
+                    Mezcla cinematográfica que balancea diálogo, música y efectos con precisión quirúrgica para una experiencia inmersiva.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sonido Directo / Location Sound - NUEVA SECCIÓN -->
+    <section class="location-sound" id="sonido-directo">
+        <div class="section-header fade-in">
+            <h2 data-es="Sonido Directo" data-en="Location Sound">Sonido Directo</h2>
+            <p data-es="Grabación profesional de sonido en locación para todo tipo de proyectos audiovisuales. Capturamos audio de calidad cinematográfica en el set."
+               data-en="Professional on-location sound recording for all types of audiovisual projects. We capture cinematic quality audio on set.">
+                Grabación profesional de sonido en locación para todo tipo de proyectos audiovisuales. Capturamos audio de calidad cinematográfica en el set.
+            </p>
+        </div>
+
+        <div class="location-intro fade-in">
+            <div class="location-intro-text">
+                <h3 data-es="De la locación al estudio" data-en="From location to studio">De la locación al estudio</h3>
+                <p data-es="Ofrecemos servicios integrales de sonido directo para producciones de cualquier escala. Desde cortometrajes independientes hasta largometrajes, documentales, publicidad y contenido para streaming. Nuestro equipo de sonidistas utiliza equipamiento profesional de grabación de campo para capturar diálogos nítidos, ambientes realistas y efectos de sonido de origen con la más alta fidelidad."
+                   data-en="We offer comprehensive location sound services for productions of any scale. From independent short films to feature films, documentaries, advertising and streaming content. Our sound team uses professional field recording equipment to capture crisp dialogue, realistic environments and source sound effects with the highest fidelity.">
+                    Ofrecemos servicios integrales de sonido directo para producciones de cualquier escala. Desde cortometrajes independientes hasta largometrajes, documentales, publicidad y contenido para streaming. Nuestro equipo de sonidistas utiliza equipamiento profesional de grabación de campo para capturar diálogos nítidos, ambientes realistas y efectos de sonido de origen con la más alta fidelidad.
+                </p>
+            </div>
+            <div class="location-equipment-list">
+                <div class="location-equipment-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                    <span>Grabadores Sound Devices / Zoom F8</span>
+                </div>
+                <div class="location-equipment-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                    <span>Micrófonos shotgun Sennheiser / Rode</span>
+                </div>
+                <div class="location-equipment-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                    <span>Sistemas de monitoraje inalámbrico</span>
+                </div>
+                <div class="location-equipment-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                    <span>Boom poles y suspensions Rycote</span>
+                </div>
+                <div class="location-equipment-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                    <span>Micrófonos lavalier inalámbricos</span>
+                </div>
+                <div class="location-equipment-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                    <span>Timecode sync Tentacle / Ambient</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="location-grid">
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/></svg>
+                </div>
+                <h4 data-es="Cortometrajes" data-en="Short Films">Cortometrajes</h4>
+                <p data-es="Sonido directo para ficción y experimental. Captura precisa de diálogos y ambientes en set." data-en="Location sound for fiction and experimental. Precise capture of dialogues and environments on set.">Sonido directo para ficción y experimental. Captura precisa de diálogos y ambientes en set.</p>
+            </div>
+
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                </div>
+                <h4 data-es="Largometrajes" data-en="Feature Films">Largometrajes</h4>
+                <p data-es="Servicios de sonido directo para producciones cinematográficas de larga duración." data-en="Location sound services for long-duration film productions.">Servicios de sonido directo para producciones cinematográficas de larga duración.</p>
+            </div>
+
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <h4 data-es="Documentales" data-en="Documentaries">Documentales</h4>
+                <p data-es="Grabación de sonido en entornos naturales y controlados para no ficción." data-en="Sound recording in natural and controlled environments for non-fiction.">Grabación de sonido en entornos naturales y controlados para no ficción.</p>
+            </div>
+
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </div>
+                <h4 data-es="Publicidad" data-en="Commercials">Publicidad</h4>
+                <p data-es="Sonido directo para spots publicitarios de TV, cine y plataformas digitales." data-en="Location sound for TV, cinema and digital platform commercials.">Sonido directo para spots publicitarios de TV, cine y plataformas digitales.</p>
+            </div>
+
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                </div>
+                <h4 data-es="Locuciones Radio/TV" data-en="Radio/TV Voiceovers">Locuciones Radio/TV</h4>
+                <p data-es="Grabación de voz en off y locuciones comerciales con calidad broadcast." data-en="Voice over and commercial voice recording with broadcast quality.">Grabación de voz en off y locuciones comerciales con calidad broadcast.</p>
+            </div>
+
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v12"/><path d="M6 12h12"/><circle cx="12" cy="12" r="10"/></svg>
+                </div>
+                <h4 data-es="Audiolibros" data-en="Audiobooks">Audiolibros</h4>
+                <p data-es="Grabación y edición de narración para audiolibros con estándares de la industria." data-en="Narration recording and editing for audiobooks with industry standards.">Grabación y edición de narración para audiolibros con estándares de la industria.</p>
+            </div>
+
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <h4 data-es="Podcasts" data-en="Podcasts">Podcasts</h4>
+                <p data-es="Grabación multitrack de podcasts con múltiples participantes en estudio o remoto." data-en="Multitrack podcast recording with multiple participants in studio or remote.">Grabación multitrack de podcasts con múltiples participantes en estudio o remoto.</p>
+            </div>
+
+            <div class="location-item fade-in">
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                </div>
+                <h4 data-es="Series Web" data-en="Web Series">Series Web</h4>
+                <p data-es="Sonido directo para producciones de streaming y contenido digital original." data-en="Location sound for streaming productions and original digital content.">Sonido directo para producciones de streaming y contenido digital original.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio con Behance incrustado -->
+    <section id="portfolio">
+        <div class="section-header fade-in">
+            <h2 data-es="Portfolio" data-en="Portfolio">Portfolio</h2>
+            <p data-es="Selección de nuestros trabajos recientes. Explora cada proyecto para ver los detalles completos."
+               data-en="Selection of our recent work. Explore each project to see full details.">
+                Selección de nuestros trabajos recientes. Explora cada proyecto para ver los detalles completos.
+            </p>
+        </div>
+
+        <div class="portfolio-grid">
+            <!-- Proyecto 1 -->
+            <div class="portfolio-item fade-in">
+                <iframe class="behance-embed" src="https://www.behance.net/embed/project/XXXXXXX?ilo0=1" allowfullscreen lazyload frameborder="0"></iframe>
+                <div class="portfolio-info">
+                    <h3 data-es="Diseño Sonoro - Cortometraje" data-en="Sound Design - Short Film">Diseño Sonoro - Cortometraje</h3>
+                    <p data-es="Foley completo, edición de diálogo y mezcla 5.1 para premiado corto argentino."
+                       data-en="Complete Foley, dialogue editing and 5.1 mixing for award-winning Argentine short.">
+                        Foley completo, edición de diálogo y mezcla 5.1 para premiado corto argentino.
+                    </p>
+                    <a href="https://www.behance.net/gallery/XXXXXXX" target="_blank" class="view-on-behance">
+                        <span data-es="Ver proyecto completo" data-en="View full project">Ver proyecto completo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Proyecto 2 -->
+            <div class="portfolio-item fade-in">
+                <iframe class="behance-embed" src="https://www.behance.net/embed/project/XXXXXXX?ilo0=1" allowfullscreen lazyload frameborder="0"></iframe>
+                <div class="portfolio-info">
+                    <h3 data-es="Foley para Publicidad" data-en="Foley for Advertising">Foley para Publicidad</h3>
+                    <p data-es="Grabación y edición de Foley para campaña publicitaria nacional de bebidas."
+                       data-en="Foley recording and editing for national beverage advertising campaign.">
+                        Grabación y edición de Foley para campaña publicitaria nacional de bebidas.
+                    </p>
+                    <a href="https://www.behance.net/gallery/XXXXXXX" target="_blank" class="view-on-behance">
+                        <span data-es="Ver proyecto completo" data-en="View full project">Ver proyecto completo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Proyecto 3 -->
+            <div class="portfolio-item fade-in">
+                <iframe class="behance-embed" src="https://www.behance.net/embed/project/XXXXXXX?ilo0=1" allowfullscreen lazyload frameborder="0"></iframe>
+                <div class="portfolio-info">
+                    <h3 data-es="Masterización para Streaming" data-en="Mastering for Streaming">Masterización para Streaming</h3>
+                    <p data-es="Masterización broadcast-ready conforme a estándares Netflix para serie documental."
+                       data-en="Broadcast-ready mastering according to Netflix standards for documentary series.">
+                        Masterización broadcast-ready conforme a estándares Netflix para serie documental.
+                    </p>
+                    <a href="https://www.behance.net/gallery/XXXXXXX" target="_blank" class="view-on-behance">
+                        <span data-es="Ver proyecto completo" data-en="View full project">Ver proyecto completo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Proyecto 4 -->
+            <div class="portfolio-item fade-in">
+                <iframe class="behance-embed" src="https://www.behance.net/embed/project/XXXXXXX?ilo0=1" allowfullscreen lazyload frameborder="0"></iframe>
+                <div class="portfolio-info">
+                    <h3 data-es="Restauración de Audio" data-en="Audio Restoration">Restauración de Audio</h3>
+                    <p data-es="Limpieza y restauración de material de archivo para documental histórico."
+                       data-en="Cleaning and restoration of archival material for historical documentary.">
+                        Limpieza y restauración de material de archivo para documental histórico.
+                    </p>
+                    <a href="https://www.behance.net/gallery/XXXXXXX" target="_blank" class="view-on-behance">
+                        <span data-es="Ver proyecto completo" data-en="View full project">Ver proyecto completo</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="https://www.behance.net/australsonus" target="_blank" class="btn btn-secondary" data-es="Ver más proyectos en Behance" data-en="View more projects on Behance">
+                Ver más proyectos en Behance
+            </a>
+        </div>
+    </section>
+
+    <!-- Equipo -->
+    <section class="equipment" id="equipo">
+        <div class="section-header fade-in">
+            <h2 data-es="Nuestro Equipo" data-en="Our Equipment">Nuestro Equipo</h2>
+            <p data-es="Tecnología profesional para resultados excepcionales."
+               data-en="Professional technology for exceptional results.">
+                Tecnología profesional para resultados excepcionales.
+            </p>
+        </div>
+
+        <div class="equipment-grid">
+            <div class="equipment-item fade-in">
+                <svg class="equipment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                <div>
+                    <h4>Pro Tools Studio</h4>
+                    <p data-es="DAW principal para edición y mezcla" data-en="Main DAW for editing and mixing">DAW principal para edición y mezcla</p>
+                </div>
+            </div>
+
+            <div class="equipment-item fade-in">
+                <svg class="equipment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                <div>
+                    <h4>REAPER</h4>
+                    <p data-es="Producción y edición avanzada" data-en="Advanced production and editing">Producción y edición avanzada</p>
+                </div>
+            </div>
+
+            <div class="equipment-item fade-in">
+                <svg class="equipment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4"/><line x1="12" y1="6" x2="12" y2="6"/></svg>
+                <div>
+                    <h4>Yamaha HS5</h4>
+                    <p data-es="Monitores de campo cercano" data-en="Nearfield monitors">Monitores de campo cercano</p>
+                </div>
+            </div>
+
+            <div class="equipment-item fade-in">
+                <svg class="equipment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4"/><line x1="12" y1="6" x2="12" y2="6"/></svg>
+                <div>
+                    <h4>Adam Audio TV5</h4>
+                    <p data-es="Monitores de referencia" data-en="Reference monitors">Monitores de referencia</p>
+                </div>
+            </div>
+
+            <div class="equipment-item fade-in">
+                <svg class="equipment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                <div>
+                    <h4 data-es="Micrófonos Profesionales" data-en="Professional Microphones">Micrófonos Profesionales</h4>
+                    <p data-es="Para grabación de Foley y ADR" data-en="For Foley and ADR recording">Para grabación de Foley y ADR</p>
+                </div>
+            </div>
+
+            <div class="equipment-item fade-in">
+                <svg class="equipment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m5 5 2.8 2.8"/><path d="m19 5-2.8 2.8"/><path d="M12 12v8"/><path d="m5 19 2.8-2.8"/><path d="m19 19-2.8-2.8"/></svg>
+                <div>
+                    <h4 data-es="Tratamiento Acústico" data-en="Acoustic Treatment">Tratamiento Acústico</h4>
+                    <p data-es="Sala control tratada profesionalmente" data-en="Professionally treated control room">Sala control tratada profesionalmente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto">
+        <div class="section-header fade-in">
+            <h2 data-es="Contacto" data-en="Contact">Contacto</h2>
+            <p data-es="Listos para dar sonido a tu próximo proyecto. Trabajamos con clientes locales e internacionales."
+               data-en="Ready to sound your next project. We work with local and international clients.">
+                Listos para dar sonido a tu próximo proyecto. Trabajamos con clientes locales e internacionales.
+            </p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info fade-in">
+                <h3 data-es="Hablemos de tu proyecto" data-en="Let's talk about your project">Hablemos de tu proyecto</h3>
+                <p data-es="Cuéntanos sobre tu proyecto y te responderemos en menos de 24 horas. También puedes escribirnos directamente por WhatsApp."
+                   data-en="Tell us about your project and we'll respond within 24 hours. You can also write to us directly via WhatsApp.">
+                    Cuéntanos sobre tu proyecto y te responderemos en menos de 24 horas. También puedes escribirnos directamente por WhatsApp.
+                </p>
+
+                <div class="contact-methods">
+                    <a href="https://wa.me/549XXXXXXXXXX" target="_blank" class="contact-method whatsapp">
+                        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <div>
+                            <strong>WhatsApp</strong>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">+54 9 XX XXXX XXXX</p>
+                        </div>
+                    </a>
+
+                    <a href="mailto:contacto@australsonus.com" class="contact-method">
+                        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                        <div>
+                            <strong>Email</strong>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">contacto@australsonus.com</p>
+                        </div>
+                    </a>
+
+                    <div class="contact-method" style="cursor: default;">
+                        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <div>
+                            <strong data-es="Ubicación" data-en="Location">Ubicación</strong>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;" data-es="Argentina (GMT-3)" data-en="Argentina (GMT-3)">Argentina (GMT-3)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label data-es="Nombre" data-en="Name">Nombre</label>
+                    <input type="text" required data-placeholder-es="Tu nombre" data-placeholder-en="Your name" placeholder="Tu nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required data-placeholder-es="tu@email.com" data-placeholder-en="your@email.com" placeholder="tu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label data-es="Tipo de Proyecto" data-en="Project Type">Tipo de Proyecto</label>
+                    <select required>
+                        <option value="" data-es="Selecciona una opción" data-en="Select an option">Selecciona una opción</option>
+                        <option value="foley" data-es="Foley / Diseño Sonoro" data-en="Foley / Sound Design">Foley / Diseño Sonoro</option>
+                        <option value="dialogue" data-es="Edición de Diálogo" data-en="Dialogue Editing">Edición de Diálogo</option>
+                        <option value="mastering" data-es="Masterización" data-en="Mastering">Masterización</option>
+                        <option value="mixing" data-es="Mezcla" data-en="Mixing">Mezcla</option>
+                        <option value="location" data-es="Sonido Directo" data-en="Location Sound">Sonido Directo</option>
+                        <option value="voiceover" data-es="Locución / Voiceover" data-en="Voiceover">Locución / Voiceover</option>
+                        <option value="podcast" data-es="Podcast / Audiolibro" data-en="Podcast / Audiobook">Podcast / Audiolibro</option>
+                        <option value="other" data-es="Otro" data-en="Other">Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label data-es="Mensaje" data-en="Message">Mensaje</label>
+                    <textarea required data-placeholder-es="Cuéntanos sobre tu proyecto..." data-placeholder-en="Tell us about your project..." placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" data-es="Enviar Mensaje" data-en="Send Message">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.behance.net/australsonus" target="_blank" aria-label="Behance">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h6a4 4 0 0 1 4 4 4 4 0 0 1-4 4H3V3z"/><path d="M3 11h7a4 4 0 0 1 4 4 4 4 0 0 1-4 4H3v-8z"/><path d="M15 7h6"/><path d="M15 15a4 4 0 0 0 4 4h2a4 4 0 0 0 0-8h-2a4 4 0 0 0-4 4z"/></svg>
+            </a>
+            <a href="https://instagram.com/australsonus" target="_blank" aria-label="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://linkedin.com/company/australsonus" target="_blank" aria-label="LinkedIn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+        </div>
+        <p>&copy; 2024 Austral Sonus. <span data-es="Todos los derechos reservados." data-en="All rights reserved.">Todos los derechos reservados.</span></p>
+    </footer>
+
+    <script>
+        // Generar barras de onda animadas
+        const waveform = document.getElementById('waveform');
+        const barCount = 50;
+        
+        for (let i = 0; i < barCount; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.animationDelay = `${i * 0.05}s`;
+            bar.style.height = `${Math.random() * 60 + 20}%`;
+            waveform.appendChild(bar);
+        }
+
+        // Cambio de idioma
+        let currentLang = 'es';
+        
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            document.querySelectorAll('[data-es]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`) || el.getAttribute(`data-${currentLang}`);
+                } else if (el.tagName === 'OPTION') {
+                    el.textContent = el.getAttribute(`data-${currentLang}`);
+                } else {
+                    el.innerHTML = el.getAttribute(`data-${currentLang}`);
+                }
+            });
+        }
+
+        // Intersection Observer para animaciones fade-in
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Manejo de formulario
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert(currentLang === 'es' ? '¡Mensaje enviado! Te contactaremos pronto.' : 'Message sent! We will contact you soon.');
+            e.target.reset();
+        }
+
+        // Smooth scroll para enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
