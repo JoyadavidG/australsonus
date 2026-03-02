@@ -68,9 +68,11 @@
 }
 
 .logo-img {
-    height: 40px;
-    width: auto;
-    filter: brightness(0) invert(1);
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
 }
 
 .logo-text {
@@ -135,16 +137,20 @@
         }
 
         /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding: 0 5%;
-        }
+       .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 5%;
+    background-image: url('Austral_Sonus_Background_3000px.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
         .waveform-container {
             position: absolute;
@@ -1431,6 +1437,7 @@
     </script>
 </body>
 </html>
+
 
 
 
