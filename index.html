@@ -59,18 +59,30 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: 0.05em;
-        }
+      .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+}
 
-        .logo span {
-            color: var(--accent);
-        }
+.logo-img {
+    height: 40px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.logo-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.logo-text span {
+    color: var(--accent);
+}
 
         .nav-links {
             display: flex;
@@ -845,7 +857,10 @@
 
     <!-- Navegación -->
     <nav>
-        <a href="#" class="logo">AUSTRAL <span>SONUS</span></a>
+        <a href="#" class="logo">AUSTRAL <span>SONUS</span></a<a href="#" class="logo">
+    <img src="Austral_Sonus_Logo_Small_400px.png" alt="Austral Sonus" class="logo-img">
+    <span class="logo-text">AUSTRAL <span>SONUS</span></span>
+</a>
         <div class="nav-links">
             <a href="#servicios" data-es="Servicios" data-en="Services">Servicios</a>
             <a href="#sonido-directo" data-es="Sonido Directo" data-en="Location Sound">Sonido Directo</a>
@@ -1416,6 +1431,7 @@
     </script>
 </body>
 </html>
+
 
 
 
