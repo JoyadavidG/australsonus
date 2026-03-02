@@ -72,7 +72,6 @@
     width: 50px;
     object-fit: cover;
     border-radius: 50%;
-    border: 2px solid var(--accent);
 }
 
 .logo-text {
@@ -146,7 +145,7 @@
     position: relative;
     overflow: hidden;
     padding: 0 5%;
-    background-image: url('Austral_Sonus_Background_3000px.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('Austral_Sonus_Background_3000px.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -203,14 +202,15 @@
         }
 
         .hero p {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            font-weight: 300;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    font-size: 1.25rem;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
         .cta-buttons {
             display: flex;
@@ -863,9 +863,8 @@
 
     <!-- Navegación -->
     <nav>
-        <a href="#" class="logo">AUSTRAL <span>SONUS</span></a<a href="#" class="logo">
+        <a href="#" class="logo">
     <img src="Austral_Sonus_Logo_Small_400px.png" alt="Austral Sonus" class="logo-img">
-    <span class="logo-text">AUSTRAL <span>SONUS</span></span>
 </a>
         <div class="nav-links">
             <a href="#servicios" data-es="Servicios" data-en="Services">Servicios</a>
@@ -1437,6 +1436,7 @@
     </script>
 </body>
 </html>
+
 
 
 
