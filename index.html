@@ -59,12 +59,45 @@
             border-bottom: 1px solid var(--border);
         }
 
-      .logo {
+      .logo-container {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
     text-decoration: none;
     color: var(--text-primary);
+}
+
+.tagline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tagline-main {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.tagline-main span {
+    color: var(--accent);
+}
+
+.tagline-sub {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+    font-weight: 500;
 }
 
 .logo-img {
@@ -1436,6 +1469,7 @@
     </script>
 </body>
 </html>
+
 
 
 
