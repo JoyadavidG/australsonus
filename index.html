@@ -64,7 +64,40 @@
     align-items: center;
     gap: 1rem;
 }
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 
+.tagline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tagline-main {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.tagline-main span {
+    color: var(--accent);
+}
+
+.tagline-sub {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+    font-weight: 500;
+}
+        
 .logo {
     display: flex;
     align-items: center;
@@ -896,9 +929,15 @@
 
     <!-- Navegación -->
     <nav>
-        <a href="#" class="logo">
-    <img src="Austral_Sonus_Logo_Small_400px.png" alt="Austral Sonus" class="logo-img">
-</a>
+        <div class="logo-container">
+    <a href="#" class="logo">
+        <img src="Austral_Sonus_Logo_Small_400px.png" alt="Austral Sonus" class="logo-img">
+    </a>
+    <div class="tagline">
+        <span class="tagline-main">AUSTRAL <span>SONUS</span></span>
+        <span class="tagline-sub" data-es="Sonido Profesional" data-en="Professional Sound">Sonido Profesional</span>
+    </div>
+</div>
         <div class="nav-links">
             <a href="#servicios" data-es="Servicios" data-en="Services">Servicios</a>
             <a href="#sonido-directo" data-es="Sonido Directo" data-en="Location Sound">Sonido Directo</a>
@@ -1469,6 +1508,7 @@
     </script>
 </body>
 </html>
+
 
 
 
